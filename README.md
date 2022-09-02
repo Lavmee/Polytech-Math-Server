@@ -15,7 +15,7 @@ Polytech-Math-Server — сервер, выполняющий математич
 
 URL Сервера: 94.19.47.75:3530
 
-![Request Example](images\img.png)
+![Request Example](images/img.png)
 
 ### API Методы
 
