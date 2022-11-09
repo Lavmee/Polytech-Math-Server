@@ -37,10 +37,12 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
+    implementation("io.ktor:ktor-client-websockets:$ktor_version")
     implementation("io.ktor:ktor-server-resources:$ktor_version")
     implementation("io.ktor:ktor-server-locations-jvm:$ktor_version")
     implementation("commons-codec:commons-codec:$commons_codec_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("io.ktor:ktor-server-websockets-jvm:2.1.3")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 
@@ -85,7 +87,7 @@ task("deploy") {
             val knownHosts = File.createTempFile("knownhosts", "txt")
             val user = "root"
             val host = "94.19.47.75"
-            val key = file("keys/polyroom-key")
+            val key = file("keys/annex-deploy-key")
             val jarFileName = "Polytech-Server-$version-all.jar"
             try {
                 "scp"(
@@ -101,7 +103,7 @@ task("deploy") {
                     "keyfile" to key,
                     "trust" to true,
                     "knownhosts" to knownHosts,
-                    "command" to "mv /root/polytech/$jarFileName /root/polytech/polytech.jar"
+                    "command" to "mv /root/polytech/$jarFileName /root/polytech/polytech-math.jar"
                 )
                 "ssh"(
                     "host" to host,
