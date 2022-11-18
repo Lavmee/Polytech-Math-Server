@@ -40,6 +40,7 @@ fun Route.calculate() {
             request.methods.forEach { methodName ->
                 val method: Method = classToLoad.getDeclaredMethod(methodName)
                 val result: String = method.invoke(instance) as String
+                println("$methodName: $result")
                 if (request.isDelayed) { delay(delayTime) }
                 thisConnection.session.sendSerialized(result)
             }
