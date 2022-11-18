@@ -1,8 +1,9 @@
-package com.annexflow.features.library.interactors
+package com.annexflow.features.library.interactors.impl
 
 import com.annexflow.database.Database
 import com.annexflow.database.datasource.LibraryDataSource
 import com.annexflow.database.entity.Library
+import com.annexflow.features.library.interactors.GetLibraryByIDInteractor
 
 
 /**

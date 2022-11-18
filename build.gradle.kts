@@ -59,11 +59,6 @@ dependencies {
     // Koin for Ktor
     implementation("io.insert-koin:koin-ktor:$koin_version")
     implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
-    testImplementation("io.insert-koin:koin-test:$koin_version")
-    testImplementation("io.insert-koin:koin-test-junit5:$koin_version")
-
-    // Math
-    implementation("org.apache.commons:commons-math3:$apache_commons_math_version")
 
     // SSH
     sshAntTask("org.apache.ant:ant-jsch:$ant_jsch_version")

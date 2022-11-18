@@ -9,7 +9,7 @@ import org.koin.logger.SLF4JLogger
  * @author Lavmee on 02.09.2022
  **/
 
-fun Application.configureKtor() {
+fun Application.configureKoin() {
     install(Koin) {
         SLF4JLogger()
         modules(appModule)

@@ -8,13 +8,15 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class Database(config: DatabaseConfig) {
+
+    private val database: Database
     init {
         val driverClassName = config.driverClassName
         val jdbcURL = config.jdbcURL
         val username = config.username
         val password = config.password
         val defaultDatabase = config.database
-        val database = Database.connect(
+        database = Database.connect(
             url = "$jdbcURL/$defaultDatabase",
             driver = driverClassName,
             user = username,
@@ -26,5 +28,5 @@ class Database(config: DatabaseConfig) {
     }
 
     suspend fun <T> databaseTransaction(block: suspend () -> T): T =
-        newSuspendedTransaction(Dispatchers.IO) { block() }
+        newSuspendedTransaction(Dispatchers.IO, database) { block() }
 }

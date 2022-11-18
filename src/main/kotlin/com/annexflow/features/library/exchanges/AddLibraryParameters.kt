@@ -12,6 +12,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Resource("$API_LIBRARY_KEYWORD.addLibrary")
 data class AddLibraryParameters(
-    @SerialName("className")
+    @SerialName("class_name")
     val className: String
 )

@@ -1,6 +1,5 @@
 package com.annexflow.plugins
 
-import com.annexflow.features.dispersion.dispersionRoutes
 import com.annexflow.features.library.libraryRoutes
 import io.ktor.server.application.*
 
@@ -9,6 +8,5 @@ import io.ktor.server.application.*
  **/
 
 fun Application.configureRouting() {
-    dispersionRoutes()
     libraryRoutes()
 }

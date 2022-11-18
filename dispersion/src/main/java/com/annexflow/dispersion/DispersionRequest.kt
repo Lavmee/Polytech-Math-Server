@@ -1,14 +1,10 @@
-package com.annexflow.features.dispersion.exchanges
+package com.annexflow.dispersion
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-/**
- * @author Lavmee on 02.09.2022
- **/
-
 @Serializable
-data class DispersionParameters(
+data class DispersionRequest(
     @SerialName("values")
     val values: List<Double>,
     @SerialName("factor_a_gradations_number")

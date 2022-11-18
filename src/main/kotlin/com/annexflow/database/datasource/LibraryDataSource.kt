@@ -10,4 +10,5 @@ import com.annexflow.database.entity.Library
 interface LibraryDataSource {
     suspend fun insertLibrary(libraryPath: String, className: String): Library?
     suspend fun retrieveLibrary(libraryId: Int): Library?
+    suspend fun retrieveLastLibrary(): Library
 }

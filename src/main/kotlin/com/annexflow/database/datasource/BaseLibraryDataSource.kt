@@ -2,9 +2,7 @@ package com.annexflow.database.datasource
 
 import com.annexflow.database.entity.Libraries
 import com.annexflow.database.entity.Library
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
 
 
 /**
@@ -14,9 +12,7 @@ import org.jetbrains.exposed.sql.select
 class BaseLibraryDataSource : LibraryDataSource {
 
     private fun resultRowToNode(row: ResultRow) = Library(
-        id = row[Libraries.id],
-        libraryPath = row[Libraries.libraryPath],
-        className = row[Libraries.className]
+        id = row[Libraries.id], libraryPath = row[Libraries.libraryPath], className = row[Libraries.className]
     )
 
     override suspend fun insertLibrary(libraryPath: String, className: String): Library? {
@@ -30,6 +26,15 @@ class BaseLibraryDataSource : LibraryDataSource {
 
     override suspend fun retrieveLibrary(libraryId: Int): Library {
         val library = Libraries.select { (Libraries.id eq libraryId) }.map { resultRowToNode(it) }
+        return library.first()
+    }
+
+    override suspend fun retrieveLastLibrary(): Library {
+        val library = Libraries
+            .selectAll()
+            .limit(1)
+            .orderBy(Libraries.id to SortOrder.DESC)
+            .map { resultRowToNode(it) }
         return library.first()
     }
 

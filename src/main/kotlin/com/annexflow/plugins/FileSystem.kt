@@ -1,15 +1,21 @@
 package com.annexflow.plugins
 
-import io.ktor.server.application.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 
 /**
  * @author Lavmee on 02.09.2022
  **/
 
-fun Application.configureFileSystem() {
-    val librariesDirectory = File("libraries/")
-    if (!librariesDirectory.exists()) {
-        librariesDirectory.mkdir()
+const val LIBRARY_DIRECTORY_PATH = "polytech/libraries/"
+const val JAR_EXTENSION = ".jar"
+
+suspend fun configureFileSystem() {
+    withContext(Dispatchers.IO) {
+        val librariesDirectory = File(LIBRARY_DIRECTORY_PATH)
+        if (!librariesDirectory.exists()) {
+            librariesDirectory.mkdirs()
+        }
     }
 }
