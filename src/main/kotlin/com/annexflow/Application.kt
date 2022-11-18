@@ -17,4 +17,5 @@ fun Application.module() {
     configureSerialization()
     configureLocations()
     configureRouting()
+    configureFileSystem()
 }

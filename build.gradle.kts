@@ -7,6 +7,8 @@ val koin_version: String by project
 val commons_codec_version: String by project
 val apache_commons_math_version: String by project
 val ant_jsch_version: String by project
+val postgresql_version: String by project
+val exposed_version: String by project
 
 plugins {
     application
@@ -45,6 +47,14 @@ dependencies {
     implementation("io.ktor:ktor-server-websockets-jvm:2.1.3")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+
+    // Exposed
+    implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
+    implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
+    implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
+
+    // PostgreSQL
+    implementation("org.postgresql:postgresql:$postgresql_version")
 
     // Koin for Ktor
     implementation("io.insert-koin:koin-ktor:$koin_version")

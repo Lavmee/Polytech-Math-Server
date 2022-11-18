@@ -12,6 +12,6 @@ import org.koin.logger.SLF4JLogger
 fun Application.configureKtor() {
     install(Koin) {
         SLF4JLogger()
-        modules(dispersionModule)
+        modules(appModule)
     }
 }
