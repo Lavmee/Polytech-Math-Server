@@ -8,6 +8,8 @@ import com.annexflow.features.library.interactors.AddLibraryInteractor
 import com.annexflow.features.library.interactors.impl.BaseAddLibraryInteractor
 import com.annexflow.features.library.interactors.impl.BaseGetLibraryByIDInteractor
 import com.annexflow.features.library.interactors.GetLibraryByIDInteractor
+import com.annexflow.features.library.interactors.RemoveLibraryInteractor
+import com.annexflow.features.library.interactors.impl.BaseRemoveLibraryInteractor
 import com.typesafe.config.ConfigFactory
 import org.koin.dsl.module
 
@@ -31,5 +33,6 @@ val appModule = module {
     single<LibraryDataSource> { BaseLibraryDataSource() }
 
     single<AddLibraryInteractor> { BaseAddLibraryInteractor(get(), get()) }
+    single<RemoveLibraryInteractor> { BaseRemoveLibraryInteractor(get(), get()) }
     single<GetLibraryByIDInteractor> { BaseGetLibraryByIDInteractor(get(), get()) }
 }

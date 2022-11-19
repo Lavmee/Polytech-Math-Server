@@ -11,4 +11,5 @@ interface LibraryDataSource {
     suspend fun insertLibrary(libraryPath: String, className: String): Library?
     suspend fun retrieveLibrary(libraryId: Int): Library?
     suspend fun retrieveLastLibrary(): Library
+    suspend fun deleteLibrary(libraryId: Int) : Boolean
 }

@@ -3,6 +3,7 @@ package com.annexflow.database.datasource
 import com.annexflow.database.entity.Libraries
 import com.annexflow.database.entity.Library
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 
 /**
@@ -36,6 +37,11 @@ class BaseLibraryDataSource : LibraryDataSource {
             .orderBy(Libraries.id to SortOrder.DESC)
             .map { resultRowToNode(it) }
         return library.first()
+    }
+
+    override suspend fun deleteLibrary(libraryId: Int): Boolean {
+        val result = Libraries.deleteWhere { Libraries.id eq libraryId }
+        return true
     }
 
 }

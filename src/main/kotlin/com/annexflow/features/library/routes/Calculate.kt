@@ -4,6 +4,7 @@ import com.annexflow.features.library.API_LIBRARY_KEYWORD
 import com.annexflow.features.library.Connection
 import com.annexflow.features.library.exchanges.CalculateParameters
 import com.annexflow.features.library.interactors.GetLibraryByIDInteractor
+import com.annexflow.features.library.interactors.RemoveLibraryInteractor
 import io.ktor.http.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -18,6 +19,7 @@ import java.util.*
 
 fun Route.calculate() {
     val getLibraryByIDInteractor by inject<GetLibraryByIDInteractor>()
+    val removeLibraryInteractor by inject<RemoveLibraryInteractor>()
     val connections = Collections.synchronizedSet<Connection?>(LinkedHashSet())
     webSocket("$API_LIBRARY_KEYWORD.calculate") {
         val thisConnection = Connection(this)
@@ -44,6 +46,7 @@ fun Route.calculate() {
                 if (request.isDelayed) { delay(delayTime) }
                 thisConnection.session.sendSerialized(result)
             }
+            removeLibraryInteractor.invoke(request.libraryId)
         } catch (e: Exception) {
             println(e.localizedMessage)
             thisConnection.session.sendSerialized(e.localizedMessage)
