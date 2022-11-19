@@ -46,7 +46,9 @@ fun Route.calculate() {
                 if (request.isDelayed) { delay(delayTime) }
                 thisConnection.session.sendSerialized(result)
             }
-            removeLibraryInteractor.invoke(request.libraryId)
+            if(removeLibraryInteractor.invoke(request.libraryId)){
+                jarFile.delete()
+            }
         } catch (e: Exception) {
             println(e.localizedMessage)
             thisConnection.session.sendSerialized(e.localizedMessage)
