@@ -1,16 +1,14 @@
 package com.annexflow.features.library.routes
 
-import com.annexflow.features.library.exchanges.AddLibraryParameters
-import com.annexflow.features.library.exchanges.AddLibraryResponse
+import com.annexflow.features.library.API_LIBRARY_KEYWORD
+import com.annexflow.features.library.exchanges.LibraryIdResponse
 import com.annexflow.features.library.interactors.AddLibraryInteractor
 import com.annexflow.plugins.JAR_EXTENSION
 import com.annexflow.plugins.LIBRARY_DIRECTORY_PATH
-import com.annexflow.plugins.configureFileSystem
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
-import io.ktor.server.resources.post
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +18,7 @@ import java.io.File
 
 fun Route.upload() {
     val addLibraryInteractor by inject<AddLibraryInteractor>()
-    post<AddLibraryParameters> { parameters ->
+    post("$API_LIBRARY_KEYWORD.upload") {
         val multiPartData = call.receiveMultipart()
         val parts = multiPartData.readAllParts().filterIsInstance<PartData.FileItem>()
         val fileName = parts.first().originalFileName
@@ -34,25 +32,23 @@ fun Route.upload() {
         }
 
         val libraryId = addLibraryInteractor.invoke(
-            libraryPath = LIBRARY_DIRECTORY_PATH,
-            className = parameters.className
+            libraryPath = LIBRARY_DIRECTORY_PATH
         )
         if (libraryId == null) {
             call.respond(HttpStatusCode.BadRequest, "Error save to database.")
             return@post
         }
-        configureFileSystem()
         val filePath = "$LIBRARY_DIRECTORY_PATH$libraryId$JAR_EXTENSION"
         val file = File(filePath)
-        parts.forEach {
-            withContext(Dispatchers.IO) {
+        withContext(Dispatchers.IO) {
+            file.createNewFile()
+            parts.forEach {
                 val fileBytes = it.streamProvider().readBytes()
-                file.createNewFile()
                 file.writeBytes(fileBytes)
+                it.dispose()
             }
-            it.dispose()
         }
 
-        call.respond(HttpStatusCode.OK, AddLibraryResponse(id = libraryId))
+        call.respond(HttpStatusCode.OK, LibraryIdResponse(id = libraryId))
     }
 }

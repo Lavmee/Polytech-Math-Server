@@ -5,6 +5,6 @@ package com.annexflow.features.library.interactors
  **/
 
 interface AddLibraryInteractor {
-    suspend operator fun invoke(libraryPath: String, className: String) : Int?
+    suspend operator fun invoke(libraryPath: String) : Int?
 
 }

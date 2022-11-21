@@ -12,6 +12,7 @@ fun main(args: Array<String>): Unit =
 
 @Suppress("unused")
 fun Application.module() {
+    configureFileSystem()
     configureKoin()
     configureWebSockets()
     configureSerialization()

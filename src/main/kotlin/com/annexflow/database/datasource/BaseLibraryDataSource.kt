@@ -13,35 +13,40 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 class BaseLibraryDataSource : LibraryDataSource {
 
     private fun resultRowToNode(row: ResultRow) = Library(
-        id = row[Libraries.id], libraryPath = row[Libraries.libraryPath], className = row[Libraries.className]
+        id = row[Libraries.id], libraryPath = row[Libraries.libraryPath]
     )
 
-    override suspend fun insertLibrary(libraryPath: String, className: String): Library? {
+    override suspend fun insertLibrary(libraryPath: String): Library? {
         val insertStatement = Libraries.insert {
             it[Libraries.libraryPath] = libraryPath
-            it[Libraries.className] = className
         }
 
         return insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToNode)
     }
 
-    override suspend fun retrieveLibrary(libraryId: Int): Library {
+    override suspend fun retrieveLibrary(libraryId: Int): Library? {
         val library = Libraries.select { (Libraries.id eq libraryId) }.map { resultRowToNode(it) }
-        return library.first()
+        return library.singleOrNull()
     }
 
-    override suspend fun retrieveLastLibrary(): Library {
+    override suspend fun retrieveLastLibrary(): Library? {
         val library = Libraries
             .selectAll()
             .limit(1)
             .orderBy(Libraries.id to SortOrder.DESC)
             .map { resultRowToNode(it) }
-        return library.first()
+        return library.singleOrNull()
     }
 
     override suspend fun deleteLibrary(libraryId: Int): Boolean {
-        val result = Libraries.deleteWhere { Libraries.id eq libraryId }
+        Libraries.deleteWhere { Libraries.id eq libraryId }
         return true
+    }
+
+    override suspend fun changePath(libraryId: Int, libraryPath: String) {
+        Libraries.update({ Libraries.id eq libraryId }) {
+            it[Libraries.libraryPath] = libraryPath
+        }
     }
 
 }

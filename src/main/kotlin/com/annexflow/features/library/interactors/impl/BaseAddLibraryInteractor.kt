@@ -15,13 +15,16 @@ class BaseAddLibraryInteractor(
     private val libraryDataSource: LibraryDataSource
 ) : AddLibraryInteractor {
 
-    override suspend operator fun invoke(libraryPath: String, className: String): Int? {
+    override suspend operator fun invoke(libraryPath: String): Int? {
         val library = database.databaseTransaction {
-            val lastLibrary = libraryDataSource.retrieveLastLibrary()
-            libraryDataSource.insertLibrary(
-                libraryPath = "$libraryPath${lastLibrary.id + 1}$JAR_EXTENSION",
-                className = className
-            )
+            val libraryNoPath = libraryDataSource.insertLibrary(libraryPath = "")
+            if (libraryNoPath != null) {
+                libraryDataSource.changePath(
+                    libraryId = libraryNoPath.id,
+                    libraryPath = "$libraryPath${libraryNoPath.id}$JAR_EXTENSION"
+                )
+            }
+            libraryNoPath
         }
         return library?.id
     }

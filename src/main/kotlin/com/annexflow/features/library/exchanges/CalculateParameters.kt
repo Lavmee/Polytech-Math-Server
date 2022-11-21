@@ -7,10 +7,8 @@ import kotlinx.serialization.Serializable
 data class CalculateParameters(
     @SerialName("library_id")
     val libraryId: Int,
-    @SerialName("constructor_values")
-    val constructorValues: List<String>,
-    @SerialName("methods")
-    val methods: List<String>,
+    @SerialName("classes")
+    val classes: List<ClassModel>,
     @SerialName("is_delayed")
     val isDelayed: Boolean = false
 )
