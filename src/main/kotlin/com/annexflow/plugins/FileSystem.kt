@@ -1,6 +1,7 @@
 package com.annexflow.plugins
 
 import io.ktor.server.application.*
+import io.ktor.server.application.*
 import java.io.File
 
 /**
@@ -10,9 +11,13 @@ import java.io.File
 const val LIBRARY_DIRECTORY_PATH = "/root/polytech/libraries/"
 const val JAR_EXTENSION = ".jar"
 
-fun Application.configureFileSystem() {
+val FileSystemPlugin = createApplicationPlugin(name = "FileSystemPlugin") {
     val librariesDirectory = File(LIBRARY_DIRECTORY_PATH)
     if (!librariesDirectory.exists()) {
         librariesDirectory.mkdirs()
     }
+}
+
+fun Application.configureFileSystem() {
+    install(FileSystemPlugin)
 }
