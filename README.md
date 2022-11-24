@@ -53,7 +53,7 @@ id : Int - идентификатор библиотеки.
 
 library_id : Int - идентификатор библиотеки.
 
-classes : List<ClassModel> - список с объектами класса ClassModel.
+classes : List\<ClassModel> - список с объектами класса ClassModel.
 
 is_delayed : Boolean - включена ли функция искусственной задержки между callback'ами.
 
@@ -61,15 +61,15 @@ is_delayed : Boolean - включена ли функция искусствен
 
 name : String - Полное имя класса.
 
-constructor_parameters : List<String> - список с параметрами конструктора.
+constructor_parameters : List\<String> - список с параметрами конструктора.
 
-methods : List<MethodModel> - идентификатор библиотеки.
+methods : List\<MethodModel> - идентификатор библиотеки.
 
 ##### Объект MethodModel
 
 name : String - название метода.
 
-parameters : List<String> - список с параметрами метода.
+parameters : List\<String> - список с параметрами метода.
   
 #### Выходные значения
 
